@@ -38,9 +38,9 @@ class SassyHash < Hash
     when String
       return ::Sass::Script::Value::String.new(value)
     when Array
-      return ::Sass::Script::Value::List.new(value)
+      return ::Sass::Script::Value::List.new(value, ',')
     when Hash
-      return ::Sass::Script::Value::Map.new(self.class[value])
+      return ::Sass::Script::Value::Map.new(self[value])
     when TrueClass, FalseClass
       return ::Sass::Script::Value::Bool.new(value)
     when ::Sass::Script::Value::Base
