@@ -1,7 +1,17 @@
 # SassyHash
 
-TODO: Write a gem description
+SassHash takes a normal ruby hash and maps is keys and values into Sass Values for injection into Sass maps.
 
+## Examples
+
+```ruby
+  ::Sass::Script::Value::Map.new(SassyHash[:foo => :bar])
+```
+
+```ruby
+  some_hash = {:foo => :bar}
+  ::Sass::Script::Value::Map.new(SassyHash[some_hash)
+```
 ## Installation
 
 Add this line to your application's Gemfile:

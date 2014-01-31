@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SassyHash::VERSION
   spec.authors       = ["Scott Davis"]
   spec.email         = ["me@sdavis.info"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{SassyHash is a Hash extension that is directly injectable into a Sass::Script::Value::Map}
+  spec.summary       = %q{Hash vonverter for Sass::Script::Value::Map}
   spec.homepage      = ""
   spec.license       = "MIT"
 
