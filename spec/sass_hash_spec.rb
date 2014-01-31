@@ -13,6 +13,13 @@ describe SassyHash do
     sassy_hash[sass_value(:foo)].value.should eq('bar')
   end
 
+  it "should create a sass string from hash" do
+    hash = {:foo => :bar}
+    sassy_hash = SassyHash[hash]
+    sassy_hash[sass_value(:foo)].class.should eq(::Sass::Script::Value::String)
+    sassy_hash[sass_value(:foo)].value.should eq('bar')
+  end
+
   it "should create a sass string from hash value using []" do
     sassy_hash = SassyHash.new
     sassy_hash[:foo] = 'bar'
