@@ -1,7 +1,7 @@
 require 'sass'
 class SassyHashException < Exception; end
 class SassyHash < Hash
-  VERSION = "0.0.1"
+  VERSION = "0.0.2"
   VALID_UNIT = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
   VALID_NUMBER = %r{(?<number>#{::Sass::SCSS::RX::NUM})#{VALID_UNIT}}
 
