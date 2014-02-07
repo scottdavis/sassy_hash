@@ -10,7 +10,7 @@ SassHash takes a normal ruby hash and maps is keys and values into Sass Values f
 
 ```ruby
   some_hash = {:foo => :bar}
-  ::Sass::Script::Value::Map.new(SassyHash[some_hash)
+  ::Sass::Script::Value::Map.new(SassyHash[some_hash])
 ```
 ## Installation
 
