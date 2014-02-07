@@ -39,6 +39,20 @@ describe SassyHash do
     SassyHash.sass_convert_value(array).class.should eq(::Sass::Script::Value::List)
   end
 
+  it "should create nested arrays" do
+    array =[1,2,[3,4, [5,6]]]
+    hash = {:foo => array}
+    sassy_hash = SassyHash[hash]
+    sassy_hash[sass_value(:foo)].value[2].class.should eq(::Sass::Script::Value::List)
+  end
+
+  it "should create nested arrays with maps" do
+    array =[1,2,[3, 4, {:map => :foo}]]
+    hash = {:foo => array}
+    sassy_hash = SassyHash[hash]
+    sassy_hash[sass_value(:foo)].value[2].class.should eq(::Sass::Script::Value::List)
+    sassy_hash[sass_value(:foo)].value[2].value[2].class.should eq(::Sass::Script::Value::Map)
+  end
 
   {
     'foo' => ::Sass::Script::Value::String,

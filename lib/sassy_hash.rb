@@ -38,7 +38,7 @@ class SassyHash < Hash
     when String
       return ::Sass::Script::Value::String.new(value)
     when Array
-      return ::Sass::Script::Value::List.new(value, ',')
+      return ::Sass::Script::Value::List.new(array_to_list(value), ',')
     when Hash
       return ::Sass::Script::Value::Map.new(self[value])
     when TrueClass, FalseClass
@@ -50,4 +50,13 @@ class SassyHash < Hash
     end
   end
 
+  def self.array_to_list(array)
+    array.each_with_index do |value, i|
+      array[i] = sass_convert_value(value)
+    end
+
+    array
+  end
 end
+
+
