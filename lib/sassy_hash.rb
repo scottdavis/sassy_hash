@@ -51,11 +51,9 @@ class SassyHash < Hash
   end
 
   def self.array_to_list(array)
-    array.each_with_index do |value, i|
-      array[i] = sass_convert_value(value)
+    array.map do |value|
+      sass_convert_value(value)
     end
-
-    array
   end
 end
 
