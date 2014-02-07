@@ -1,0 +1,5 @@
+{
+  "name": "sassy_hash",
+  "description": "SassyHash is a Hash extension that is directly injectable into a Sass::Script::Value::Map",
+  "tags": ["ruby", "maps"]
+}
