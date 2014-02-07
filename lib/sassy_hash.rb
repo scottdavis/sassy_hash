@@ -43,7 +43,7 @@ class SassyHash < Hash
       end
       return ::Sass::Script::Value::String.new(value)
     when Array
-      return ::Sass::Script::Value::List.new(array_to_list(value), ',')
+      return ::Sass::Script::Value::List.new(array_to_list(value), :sapce)
     when Hash
       return ::Sass::Script::Value::Map.new(self[value])
     when TrueClass, FalseClass
