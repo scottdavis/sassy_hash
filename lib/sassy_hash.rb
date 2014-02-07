@@ -43,7 +43,7 @@ class SassyHash < Hash
       end
       return ::Sass::Script::Value::String.new(value)
     when Array
-      return ::Sass::Script::Value::List.new(array_to_list(value), :sapce)
+      return ::Sass::Script::Value::List.new(value.map {|v| sass_convert_value(v) }, :sapce)
     when Hash
       return ::Sass::Script::Value::Map.new(self[value])
     when TrueClass, FalseClass
@@ -52,12 +52,6 @@ class SassyHash < Hash
       return value
     else
       raise SassyHashException, "Non convertable value given" 
-    end
-  end
-
-  def self.array_to_list(array)
-    array.map do |value|
-      sass_convert_value(value)
     end
   end
 end
