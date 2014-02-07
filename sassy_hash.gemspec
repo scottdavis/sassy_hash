@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Scott Davis"]
   spec.email         = ["me@sdavis.info"]
   spec.description   = %q{SassyHash is a Hash extension that is directly injectable into a Sass::Script::Value::Map}
-  spec.summary       = %q{Hash vonverter for Sass::Script::Value::Map}
-  spec.homepage      = ""
+  spec.summary       = %q{Hash converter for Sass::Script::Value::Map}
+  spec.homepage      = "https://github.com/scottdavis/sassy_hash"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
