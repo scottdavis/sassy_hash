@@ -4,8 +4,7 @@ class SassyHashException < Exception; end
 class SassyHash < Hash
   VERSION = "0.0.5"
   VALID_UNIT = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
-  VALID_NUMBER = %r{(?<number>#{::Sass::SCSS::RX::NUM})#{VALID_UNIT}}
-
+  VALID_NUMBER = %r{((?<float>^[0-9]*\.[0-9]+)|(?<int>^[0-9]+))#{VALID_UNIT}}
   def self.[](hash_values)
     super(hash_values).tap do |hash|
       hash.sassify!
@@ -34,18 +33,25 @@ class SassyHash < Hash
 
   def self.sass_convert_value(value)
     case value
-    when Integer, Float
-      return ::Sass::Script::Value::Number.new(value)
+    when Integer, Fixnum
+      return ::Sass::Script::Value::Number.new(value.to_i)
+    when Float
+      return ::Sass::Script::Value::Number.new(value.to_f)
     when Symbol
       return ::Sass::Script::Value::String.new(value.to_s)
     when String
-      # color
+      # hex color
       if value =~ ::Sass::SCSS::RX::HEXCOLOR
         return ::Sass::Script::Value::Color.from_hex(value)
       end
       #number
       if matches = value.match(VALID_NUMBER)
-        return ::Sass::Script::Value::Number.new(matches[:number], matches[:unit])
+        num = if matches[:float]
+          matches[:float].to_f
+        elsif matches[:int]
+          matches[:int].to_i
+        end
+        return ::Sass::Script::Value::Number.new(num, matches[:unit])
       end
       #string
       return ::Sass::Script::Value::String.new(value)

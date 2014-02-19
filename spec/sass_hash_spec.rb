@@ -69,6 +69,22 @@ describe SassyHash do
     sassy_hash[sass_value('foo')].value[sass_value('bar')].value[sass_value('baz')].value.should eq('hi')
   end
 
+  it "should create a valid integer number" do
+    hash = {:foo => "120px"}
+    sassy_hash = SassyHash[hash]
+    num = sassy_hash[sass_value(:foo)].value
+    num.class.should eq(Fixnum)
+    num.should eq(120)
+  end
+
+  it "should create a valid float number" do
+    hash = {:foo => '120.5px'}
+    sassy_hash = SassyHash[hash]
+    num = sassy_hash[sass_value(:foo)].value
+    num.class.should eq(Float)
+    num.should eq(120.5)
+  end
+
   {
     "#fff"    => ::Sass::Script::Value::Color,
     "#111"    => ::Sass::Script::Value::Color,
