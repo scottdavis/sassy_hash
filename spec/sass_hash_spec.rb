@@ -55,14 +55,16 @@ describe SassyHash do
   end
 
   {
-    'foo' => ::Sass::Script::Value::String,
-    0 => ::Sass::Script::Value::Number,
-    1.0 => ::Sass::Script::Value::Number,
-    "1.0px" => ::Sass::Script::Value::Number,
-    '1px' => ::Sass::Script::Value::Number,
-    :foo => ::Sass::Script::Value::String,
-    true => ::Sass::Script::Value::Bool,
-    false => ::Sass::Script::Value::Bool
+    "#fff"    => ::Sass::Script::Value::Color,
+    "#eeeeee" => ::Sass::Script::Value::Color,
+    'foo'     => ::Sass::Script::Value::String,
+    0         => ::Sass::Script::Value::Number,
+    1.0       => ::Sass::Script::Value::Number,
+    "1.0px"   => ::Sass::Script::Value::Number,
+    '1px'     => ::Sass::Script::Value::Number,
+    :foo      => ::Sass::Script::Value::String,
+    true      => ::Sass::Script::Value::Bool,
+    false     => ::Sass::Script::Value::Bool
   }.each do |instance, klass|
     it "should return #{klass} from #{instance.inspect}" do
       SassyHash.sass_convert_value(instance).class.should eq(klass)
