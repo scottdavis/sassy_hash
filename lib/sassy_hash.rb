@@ -39,13 +39,13 @@ class SassyHash < Hash
     when Symbol
       return ::Sass::Script::Value::String.new(value.to_s)
     when String
-      #number
-      if matches = value.match(VALID_NUMBER)
-        return ::Sass::Script::Value::Number.new(matches[:number], matches[:unit])
-      end
       # color
       if value =~ ::Sass::SCSS::RX::HEXCOLOR
         return ::Sass::Script::Value::Color.from_hex(value)
+      end
+      #number
+      if matches = value.match(VALID_NUMBER)
+        return ::Sass::Script::Value::Number.new(matches[:number], matches[:unit])
       end
       #string
       return ::Sass::Script::Value::String.new(value)

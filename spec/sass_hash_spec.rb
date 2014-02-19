@@ -62,6 +62,7 @@ describe SassyHash do
     1.0       => ::Sass::Script::Value::Number,
     "1.0px"   => ::Sass::Script::Value::Number,
     '1px'     => ::Sass::Script::Value::Number,
+    '120px'     => ::Sass::Script::Value::Number,
     :foo      => ::Sass::Script::Value::String,
     true      => ::Sass::Script::Value::Bool,
     false     => ::Sass::Script::Value::Bool
