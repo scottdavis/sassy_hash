@@ -54,13 +54,19 @@ describe SassyHash do
     sassy_hash[sass_value(:foo)].value[2].value[2].class.should eq(::Sass::Script::Value::Map)
   end
 
-  it "should create the colors" do
-   key = 'primaryColor'
-   hash = {'height' => '120px', key => '#111', 'foo' => 'bar'}
-   sassy_hash = SassyHash[hash]
-   sassy_hash[sass_value(key)].class.should eq(::Sass::Script::Value::Color)
-   sassy_hash[sass_value('height')].class.should eq(::Sass::Script::Value::Number)
-   sassy_hash[sass_value('foo')].class.should eq(::Sass::Script::Value::String)
+  it "should create a hash valid for a map" do
+    key = 'primaryColor'
+    hash = {'height' => '120px', key => '#111', 'foo' => 'bar'}
+    sassy_hash = SassyHash[hash]
+    sassy_hash[sass_value(key)].class.should eq(::Sass::Script::Value::Color)
+    sassy_hash[sass_value('height')].class.should eq(::Sass::Script::Value::Number)
+    sassy_hash[sass_value('foo')].class.should eq(::Sass::Script::Value::String)
+  end
+  
+  it "should create nested maps with string keys" do
+    hash = {'foo' => {'bar' => {'baz' => 'hi'}}}
+    sassy_hash = SassyHash[hash]
+    sassy_hash[sass_value('foo')].value[sass_value('bar')].value[sass_value('baz')].value.should eq('hi')
   end
 
   {
@@ -72,7 +78,7 @@ describe SassyHash do
     1.0       => ::Sass::Script::Value::Number,
     "1.0px"   => ::Sass::Script::Value::Number,
     '1px'     => ::Sass::Script::Value::Number,
-    '120px'     => ::Sass::Script::Value::Number,
+    '120px'   => ::Sass::Script::Value::Number,
     :foo      => ::Sass::Script::Value::String,
     true      => ::Sass::Script::Value::Bool,
     false     => ::Sass::Script::Value::Bool
