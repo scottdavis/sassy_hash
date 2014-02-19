@@ -54,8 +54,18 @@ describe SassyHash do
     sassy_hash[sass_value(:foo)].value[2].value[2].class.should eq(::Sass::Script::Value::Map)
   end
 
+  it "should create the colors" do
+   key = 'primaryColor'
+   hash = {'height' => '120px', key => '#111', 'foo' => 'bar'}
+   sassy_hash = SassyHash[hash]
+   sassy_hash[sass_value(key)].class.should eq(::Sass::Script::Value::Color)
+   sassy_hash[sass_value('height')].class.should eq(::Sass::Script::Value::Number)
+   sassy_hash[sass_value('foo')].class.should eq(::Sass::Script::Value::String)
+  end
+
   {
     "#fff"    => ::Sass::Script::Value::Color,
+    "#111"    => ::Sass::Script::Value::Color,
     "#eeeeee" => ::Sass::Script::Value::Color,
     'foo'     => ::Sass::Script::Value::String,
     0         => ::Sass::Script::Value::Number,
