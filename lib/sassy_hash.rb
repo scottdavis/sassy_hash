@@ -1,4 +1,5 @@
 require 'sass'
+require 'sass/scss/rx'
 class SassyHashException < Exception; end
 class SassyHash < Hash
   VERSION = "0.0.3"
