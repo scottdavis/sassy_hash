@@ -89,6 +89,8 @@ describe SassyHash do
     "#fff"    => ::Sass::Script::Value::Color,
     "#111"    => ::Sass::Script::Value::Color,
     "#eeeeee" => ::Sass::Script::Value::Color,
+    "rgb(1.0, 1.0, 1.0)" => ::Sass::Script::Value::Color,
+    "rgba(1.0, 51, 1.0, 0.5)" => ::Sass::Script::Value::Color,
     'foo'     => ::Sass::Script::Value::String,
     0         => ::Sass::Script::Value::Number,
     1.0       => ::Sass::Script::Value::Number,

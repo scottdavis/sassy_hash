@@ -2,9 +2,13 @@ require 'sass'
 require 'sass/scss/rx'
 class SassyHashException < Exception; end
 class SassyHash < Hash
-  VERSION = "0.0.6"
-  VALID_UNIT = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
-  VALID_NUMBER = %r{((?<float>^[0-9]*\.[0-9]+)|(?<int>^[0-9]+))#{VALID_UNIT}}
+  VERSION       = "0.0.6"
+  VALID_UNIT    = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
+  FLOAT_OR_INT_MATCH  = %r{(?<float>^[0-9]*\.[0-9]+)|(?<int>^[0-9]+)}
+  FLOAT_OR_INT = %r{(^[0-9]*\.[0-9]+|^[0-9]+)}
+  VALID_NUMBER  = %r{(#{FLOAT_OR_INT_MATCH})#{VALID_UNIT}}
+  RGB_REGEX     = %r{(rgba?\((?<colors>([^)]*))\))}
+
   def self.[](hash_values)
     super(hash_values).tap do |hash|
       hash.sassify!
@@ -31,6 +35,24 @@ class SassyHash < Hash
     super(key, value)
   end
 
+  def self.parse_color(value)
+      # hex color
+    if value =~ Sass::SCSS::RX::HEXCOLOR
+      return ::Sass::Script::Value::Color.from_hex(value)
+    end
+
+    if matches = value.match(RGB_REGEX)
+      colors = matches[:colors].split(',')
+      args = {:red => colors.shift, :green => colors.shift, :blue => colors.shift}
+      if colors.length == 4
+        args[:alpha] = colors.shift
+      end
+      return ::Sass::Script::Value::Color.new args
+    end
+
+    nil
+  end
+
   def self.sass_convert_value(value)
     case value
     when Integer, Fixnum
@@ -40,10 +62,8 @@ class SassyHash < Hash
     when Symbol
       return ::Sass::Script::Value::String.new(value.to_s)
     when String
-      # hex color
-      if value =~ ::Sass::SCSS::RX::HEXCOLOR
-        return ::Sass::Script::Value::Color.from_hex(value)
-      end
+      color = self.parse_color(value)
+      return color unless color.nil?
       #number
       if matches = value.match(VALID_NUMBER)
         num = if matches[:float]
