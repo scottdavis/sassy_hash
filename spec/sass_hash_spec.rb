@@ -85,12 +85,35 @@ describe SassyHash do
     num.should eq(120.5)
   end
 
+
+  it "should correctly parse an rbg value" do
+    string = "rgb(255, 255, 255)"
+    color = SassyHash.sass_convert_value(string)
+    color.send(:hex_str).should eq('#ffffff')
+  end
+
+  it "should correctly parse an rbga value" do
+    string = "rgb(255, 255, 255, 1.0)"
+    color = SassyHash.sass_convert_value(string)
+    color.send(:hex_str).should eq('#ffffff')
+  end
+
+  it "should parse raw color names" do
+    {"green" => '#008000', "blue" => '#0000ff', "orange" => '#ffa500', "fuchsia" => '#ff00ff'}.each do |color, hex|
+      color = SassyHash.sass_convert_value(color)
+      color.send(:hex_str).should eq(hex)
+    end
+  end
+
   {
     "#fff"    => ::Sass::Script::Value::Color,
     "#111"    => ::Sass::Script::Value::Color,
     "#eeeeee" => ::Sass::Script::Value::Color,
     "rgb(1.0, 1.0, 1.0)" => ::Sass::Script::Value::Color,
     "rgba(1.0, 51, 1.0, 0.5)" => ::Sass::Script::Value::Color,
+    "green" => ::Sass::Script::Value::Color,
+    "yellow" => ::Sass::Script::Value::Color,
+    "aqua" => ::Sass::Script::Value::Color,
     'foo'     => ::Sass::Script::Value::String,
     0         => ::Sass::Script::Value::Number,
     1.0       => ::Sass::Script::Value::Number,

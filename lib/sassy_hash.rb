@@ -36,6 +36,10 @@ class SassyHash < Hash
   end
 
   def self.parse_color(value)
+    sass_colors = Sass::Script::Value::Color::COLOR_NAMES
+    if sass_colors.has_key?(value)
+      return ::Sass::Script::Value::Color.new sass_colors[value]
+    end
       # hex color
     if value =~ Sass::SCSS::RX::HEXCOLOR
       return ::Sass::Script::Value::Color.from_hex(value)
@@ -43,11 +47,8 @@ class SassyHash < Hash
 
     if matches = value.match(RGB_REGEX)
       colors = matches[:colors].split(',')
-      args = {:red => colors.shift, :green => colors.shift, :blue => colors.shift}
-      if colors.length == 4
-        args[:alpha] = colors.shift
-      end
-      return ::Sass::Script::Value::Color.new args
+      colors.map!(&:to_f)
+      return ::Sass::Script::Value::Color.new colors
     end
 
     nil
