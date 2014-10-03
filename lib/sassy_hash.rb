@@ -1,9 +1,9 @@
 require 'sass'
 class SassyHashException < Exception; end
 class SassyHash < Hash
-  VERSION = "0.1.0"
+  VERSION = "0.0.3"
   VALID_UNIT = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
-  VALID_NUMBER = %r{(?<number>#{Sass::Script::Lexer::PARSEABLE_NUMBER})}
+  VALID_NUMBER = %r{(?<number>#{::Sass::SCSS::RX::NUM})#{VALID_UNIT}}
 
   def self.[](hash_values)
     super(hash_values).tap do |hash|
@@ -39,8 +39,7 @@ class SassyHash < Hash
       return ::Sass::Script::Value::String.new(value.to_s)
     when String
       if matches = value.match(VALID_NUMBER)
-        unit_matches = value.match(VALID_UNIT)
-        return ::Sass::Script::Value::Number.new(matches[:number], unit_matches[:unit])
+        return ::Sass::Script::Value::Number.new(matches[:number], matches[:unit])
       end
       return ::Sass::Script::Value::String.new(value)
     when Array
