@@ -1,8 +1,9 @@
+
 require 'sass'
 require 'sass/scss/rx'
 class SassyHashException < Exception; end
 class SassyHash < Hash
-  VERSION       = "0.0.6"
+  VERSION       = "0.1.0"
   VALID_UNIT    = %r{(?<unit>#{::Sass::SCSS::RX::NMSTART}#{::Sass::SCSS::RX::NMCHAR}|%*)}
   FLOAT_OR_INT_MATCH  = %r{(?<float>^[0-9]*\.[0-9]+)|(?<int>^[0-9]+)}
   FLOAT_OR_INT = %r{(^[0-9]*\.[0-9]+|^[0-9]+)}
