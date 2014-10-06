@@ -78,7 +78,7 @@ class SassyHash < Hash
       #string
       return ::Sass::Script::Value::String.new(value)
     when Array
-      return ::Sass::Script::Value::List.new(value.map {|v| sass_convert_value(v) }, :sapce)
+      return ::Sass::Script::Value::List.new(value.map {|v| sass_convert_value(v) }, :comma)
     when Hash
       return ::Sass::Script::Value::Map.new(self[value])
     when TrueClass, FalseClass
